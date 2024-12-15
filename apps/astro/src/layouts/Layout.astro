@@ -1,0 +1,26 @@
+---
+import '../styles/globals.css';
+// Example prop for page titles (you can add more props as needed)
+export interface Props {
+  title: string;
+}
+
+const { title } = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <title>{title}</title>
+</head>
+<body>
+  <main class="mx-auto py-8">
+    <slot /> {/* This is where the page content will be injected */}
+  </main>
+</body>
+</html>

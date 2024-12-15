@@ -1,0 +1,1 @@
+ALTER TABLE `recaps` RENAME COLUMN "image" TO "imageId";

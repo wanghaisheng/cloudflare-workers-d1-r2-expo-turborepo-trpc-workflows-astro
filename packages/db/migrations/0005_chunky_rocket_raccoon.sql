@@ -1,0 +1,1 @@
+ALTER TABLE `moments` RENAME COLUMN "timestamp" TO "createdAt";

@@ -1,0 +1,44 @@
+{
+  "compilerOptions": {
+    "moduleResolution": "bundler",
+    "module": "ESNext",
+    "target": "ESNext",
+    "allowJs": true,
+    "allowImportingTsExtensions": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "strict": true,
+    "noEmit": true,
+    "skipLibCheck": true,
+    "paths": {
+      "@/*": [
+        "./*"
+      ],
+      "@acme/api/*": [
+        "../../packages/api/*"
+      ]
+    },
+    "types": [
+      "node"
+    ],
+    "jsx": "react-native",
+    "checkJs": false,
+    "moduleSuffixes": [
+      ".ios",
+      ".android",
+      ".native",
+      ""
+    ]
+  },
+  "include": [
+    "expo-router/**/*.{ts,tsx}",
+    "utils/**/*",
+    "app/**/*",
+    "*.{ts,tsx}",
+    "*.js"
+  ],
+  "exclude": [
+    "node_modules"
+  ],
+  "extends": "expo/tsconfig.base"
+}

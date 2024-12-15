@@ -1,0 +1,1 @@
+ALTER TABLE `userMeta` ADD `artStyle` text DEFAULT 'classical painting' NOT NULL;

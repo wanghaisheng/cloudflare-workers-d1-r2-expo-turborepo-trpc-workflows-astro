@@ -1,0 +1,9 @@
+---
+import Layout from '../layouts/Layout.astro';
+import {Hero} from '../components/react/hero.tsx'
+import '@/styles/globals.css'
+---
+
+<Layout title="The Lore Book: The greatest story ever told is yours.">
+  <Hero client:load />
+</Layout>

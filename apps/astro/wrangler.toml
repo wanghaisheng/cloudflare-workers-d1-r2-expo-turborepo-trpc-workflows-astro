@@ -1,0 +1,16 @@
+name = "lorebook-web"
+compatibility_date = "2024-03-20"
+compatibility_flags = ["nodejs_compat"]
+
+[site]
+bucket = "./dist"
+pages_build_output_dir = "dist"
+
+[build]
+command = "pnpm run build"
+
+[env.production]
+name = "lorebook-web-prod"
+
+[env.development]
+name = "lorebook-web-dev" 

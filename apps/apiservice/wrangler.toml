@@ -1,0 +1,31 @@
+name = ""
+compatibility_date = "2024-09-23"
+compatibility_flags = ["nodejs_compat"]
+
+main = "src/index.ts"
+
+[build]
+command = "pnpm run build"
+
+[[r2_buckets]]
+bucket_name = ""
+preview_bucket_name = ""
+binding = ""
+
+[[d1_databases]]
+binding = "DB"
+database_name = ""
+database_id = ""
+
+
+# You definitely want to make anything secret an actual secret key using wrangler, so in a production app do that instead of setting here
+[vars]
+WRANGLER_BUILD_CONDITIONS=""
+WRANGLER_BUILD_PLATFORM="node"
+CLERK_PUBLISHABLE_KEY = ""
+CLERK_SECRET_KEY = ""
+
+[dev]
+port = 8787
+
+

@@ -1,0 +1,98 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+node_modules
+.pnp
+.pnp.js
+
+# testing
+coverage
+
+# next.js
+.next/
+out/
+next-env.d.ts
+
+# nitro
+.nitro/
+.output/
+
+# expo
+.expo/
+expo-env.d.ts
+apps/expo/.gitignore
+apps/expo/ios
+apps/expo/android
+
+# production
+build
+
+# misc
+.DS_Store
+*.pem
+
+# debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# local env files
+.env
+.env*.local
+
+# vercel
+.vercel
+
+# typescript
+dist/
+.cache
+
+# turbo
+.turbo
+/apps/expo-app/android/app/src/debug/AndroidManifest.xml
+/apps/expo-app/android/app/src/main/AndroidManifest.xml
+/apps/expo-app/android/app/build.gradle
+/apps/expo-app/android/build.gradle
+/apps/expo-app/android/app/src/main/res/values/colors.xml
+/apps/expo-app/android/app/src/main/res/values-night/colors.xml
+/apps/expo-app/android/app/debug.keystore
+/apps/expo-app/android/gradle.properties
+/apps/expo-app/android/gradle/wrapper/gradle-wrapper.jar
+/apps/expo-app/android/gradle/wrapper/gradle-wrapper.properties
+/apps/expo-app/android/gradlew
+/apps/expo-app/android/gradlew.bat
+/apps/expo-app/android/app/src/main/res/mipmap-hdpi/ic_launcher.webp
+/apps/expo-app/android/app/src/main/res/mipmap-mdpi/ic_launcher.webp
+/apps/expo-app/android/app/src/main/res/mipmap-xhdpi/ic_launcher.webp
+/apps/expo-app/android/app/src/main/res/mipmap-xxhdpi/ic_launcher.webp
+/apps/expo-app/android/app/src/main/res/mipmap-xxxhdpi/ic_launcher.webp
+/apps/expo-app/android/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml
+/apps/expo-app/android/app/src/main/res/drawable/ic_launcher_background.xml
+/apps/expo-app/android/app/src/main/res/mipmap-hdpi/ic_launcher_foreground.webp
+/apps/expo-app/android/app/src/main/res/mipmap-mdpi/ic_launcher_foreground.webp
+/apps/expo-app/android/app/src/main/res/mipmap-xhdpi/ic_launcher_foreground.webp
+/apps/expo-app/android/app/src/main/res/mipmap-xxhdpi/ic_launcher_foreground.webp
+/apps/expo-app/android/app/src/main/res/mipmap-xxxhdpi/ic_launcher_foreground.webp
+/apps/expo-app/android/app/src/main/res/mipmap-hdpi/ic_launcher_round.webp
+/apps/expo-app/android/app/src/main/res/mipmap-mdpi/ic_launcher_round.webp
+/apps/expo-app/android/app/src/main/res/mipmap-xhdpi/ic_launcher_round.webp
+/apps/expo-app/android/app/src/main/res/mipmap-xxhdpi/ic_launcher_round.webp
+/apps/expo-app/android/app/src/main/res/mipmap-xxxhdpi/ic_launcher_round.webp
+/apps/expo-app/android/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml
+/apps/expo-app/android/app/src/main/java/com/anonymous/expoapp/MainActivity.kt
+/apps/expo-app/android/app/src/main/java/com/anonymous/expoapp/MainApplication.kt
+/apps/expo-app/android/app/proguard-rules.pro
+/apps/expo-app/android/app/src/main/res/drawable/rn_edit_text_material.xml
+/apps/expo-app/android/settings.gradle
+/apps/expo-app/android/app/src/main/res/drawable-hdpi/splashscreen_logo.png
+/apps/expo-app/android/app/src/main/res/drawable-mdpi/splashscreen_logo.png
+/apps/expo-app/android/app/src/main/res/drawable-xhdpi/splashscreen_logo.png
+/apps/expo-app/android/app/src/main/res/drawable-xxhdpi/splashscreen_logo.png
+/apps/expo-app/android/app/src/main/res/drawable-xxxhdpi/splashscreen_logo.png
+/apps/expo-app/android/app/src/main/res/values/strings.xml
+/apps/expo-app/android/app/src/main/res/values/styles.xml
+/apps/apiservice/.wrangler/
+/packages/db/.wrangler/
+/apps/eventsservice/.wrangler/
+.dev.vars

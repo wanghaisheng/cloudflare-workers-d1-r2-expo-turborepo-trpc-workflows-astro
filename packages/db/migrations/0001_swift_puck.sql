@@ -1,0 +1,1 @@
+ALTER TABLE `moments` ADD `userId` text NOT NULL;
