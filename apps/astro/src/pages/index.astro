@@ -1,9 +1,25 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import {Hero} from '../components/react/hero.tsx'
+import Navbar from '../components/Navbar.astro';
+import Hero from '../components/Hero.astro';
+import Features from '../components/Features.astro';
+import RecentInvites from '../components/RecentInvites.astro';
+import HowItWorks from '../components/HowItWorks.astro';
+import Categories from '../components/Categories.astro';
+import CallToAction from '../components/CallToAction.astro';
+import Footer from '../components/Footer.astro';
 import '@/styles/globals.css'
 ---
 
-<Layout title="The Lore Book: The greatest story ever told is yours.">
-  <Hero client:load />
+<Layout title="InviteHub - 邀请码分享与交易平台">
+  <Navbar />
+  <main>
+    <Hero />
+    <Features />
+    <RecentInvites />
+    <HowItWorks />
+    <Categories />
+    <CallToAction />
+  </main>
+  <Footer />
 </Layout>

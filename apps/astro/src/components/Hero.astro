@@ -1,0 +1,42 @@
+<section class="bg-gradient-to-r from-primary to-secondary text-white py-20 md:py-32">
+  <div class="container mx-auto px-4 text-center">
+    <h1 class="text-4xl md:text-5xl font-bold mb-6">
+      发现和分享独家邀请码
+    </h1>
+    <p class="text-lg md:text-xl mb-8 opacity-90 max-w-2xl mx-auto">
+      InviteHub 让你轻松找到各种热门应用、服务的邀请码，或分享你多余的邀请码给需要的人。
+    </p>
+    
+    <div class="max-w-2xl mx-auto flex rounded-lg overflow-hidden shadow-lg">
+      <input 
+        type="text" 
+        class="flex-1 py-4 px-6 text-gray-900 text-lg focus:outline-none" 
+        placeholder="搜索应用或服务名称..."
+      />
+      <button class="bg-white text-primary px-8 py-4 font-semibold hover:bg-gray-50 transition-colors flex items-center">
+        <i class="fas fa-search mr-2"></i>
+        搜索
+      </button>
+    </div>
+  </div>
+</section>
+
+<script>
+  // 搜索功能
+  const searchInput = document.querySelector('input[type="text"]') as HTMLInputElement;
+  const searchButton = document.querySelector('button');
+
+  function handleSearch() {
+    const searchTerm = searchInput?.value.trim();
+    if (searchTerm) {
+      window.location.href = `/search?q=${encodeURIComponent(searchTerm)}`;
+    }
+  }
+
+  searchButton?.addEventListener('click', handleSearch);
+  searchInput?.addEventListener('keypress', (e: KeyboardEvent) => {
+    if (e.key === 'Enter') {
+      handleSearch();
+    }
+  });
+</script> 

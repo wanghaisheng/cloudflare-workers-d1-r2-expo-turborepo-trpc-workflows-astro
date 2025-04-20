@@ -1,0 +1,85 @@
+---
+interface Category {
+  id: string;
+  name: string;
+  description: string;
+  icon: string;
+}
+
+const categories: Category[] = [
+  {
+    id: 'ai',
+    name: 'AI工具',
+    description: 'ChatGPT, Midjourney, Claude等人工智能服务',
+    icon: 'robot'
+  },
+  {
+    id: 'streaming',
+    name: '流媒体',
+    description: 'Netflix, Disney+, Spotify, YouTube Premium等',
+    icon: 'video'
+  },
+  {
+    id: 'gaming',
+    name: '游戏',
+    description: 'Steam, Xbox Game Pass, Epic Games等游戏服务',
+    icon: 'gamepad'
+  },
+  {
+    id: 'dev',
+    name: '开发工具',
+    description: 'GitHub, VS Code, JetBrains等开发者服务',
+    icon: 'code'
+  },
+  {
+    id: 'shopping',
+    name: '电商服务',
+    description: 'Amazon Prime, 京东PLUS, 淘宝88VIP等会员',
+    icon: 'shopping-cart'
+  },
+  {
+    id: 'cloud',
+    name: '云服务',
+    description: 'AWS, Google Cloud, Azure等云计算平台',
+    icon: 'cloud'
+  },
+  {
+    id: 'mobile',
+    name: '移动应用',
+    description: '各类手机应用的内测邀请和会员服务',
+    icon: 'mobile-alt'
+  },
+  {
+    id: 'more',
+    name: '更多分类',
+    description: '查看所有服务分类',
+    icon: 'ellipsis-h'
+  }
+];
+---
+
+<section class="py-20 bg-gray-50">
+  <div class="container">
+    <div class="text-center mb-16">
+      <h2 class="text-3xl md:text-4xl font-bold mb-4">按分类浏览</h2>
+      <p class="text-lg text-muted-foreground max-w-2xl mx-auto">
+        探索各种类别的邀请码
+      </p>
+    </div>
+    
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
+      {categories.map((category) => (
+        <a 
+          href={`/category/${category.id}`}
+          class="bg-white p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow text-center"
+        >
+          <div class="text-primary text-4xl mb-4">
+            <i class={`fas fa-${category.icon}`}></i>
+          </div>
+          <h3 class="text-xl font-bold mb-2">{category.name}</h3>
+          <p class="text-muted-foreground">{category.description}</p>
+        </a>
+      ))}
+    </div>
+  </div>
+</section> 
