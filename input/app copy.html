@@ -1,0 +1,1333 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>InviteHub - 邀请码分享与交易平台</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* 全局样式 */
+        :root {
+            --primary-color: #4a86e8;
+            --secondary-color: #6c5ce7;
+            --accent-color: #00cec9;
+            --success-color: #2ecc71;
+            --warning-color: #f1c40f;
+            --danger-color: #e74c3c;
+            --dark-color: #2d3436;
+            --light-color: #f5f6fa;
+            --gray-color: #b2bec3;
+            --border-radius: 8px;
+            --box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            color: var(--dark-color);
+            background-color: #f9fafb;
+            line-height: 1.6;
+            overflow-x: hidden;
+            padding-bottom: 70px; /* 为底部导航腾出空间 */
+        }
+        
+        a {
+            text-decoration: none;
+            color: var(--primary-color);
+        }
+        
+        img {
+            max-width: 100%;
+        }
+        
+        .container {
+            padding: 15px;
+            max-width: 100%;
+            margin: 0 auto;
+        }
+        
+        /* 头部样式 */
+        .header {
+            background-color: white;
+            box-shadow: var(--box-shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .header-title {
+            display: flex;
+            align-items: center;
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+        
+        .header-title i {
+            margin-right: 8px;
+        }
+        
+        .header-actions a {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            color: var(--dark-color);
+            margin-left: 10px;
+            background-color: #f5f6fa;
+        }
+        
+        /* 搜索栏样式 */
+        .search-bar {
+            background-color: white;
+            padding: 15px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        
+        .search-input {
+            position: relative;
+            display: flex;
+            align-items: center;
+            background-color: #f5f6fa;
+            border-radius: 50px;
+            padding: 0 15px;
+            overflow: hidden;
+        }
+        
+        .search-input i {
+            color: #9ca3af;
+            font-size: 1rem;
+        }
+        
+        .search-input input {
+            flex: 1;
+            border: none;
+            background: transparent;
+            padding: 12px 15px;
+            font-size: 1rem;
+            outline: none;
+        }
+        
+        /* 主内容区域 */
+        .main-content {
+            padding-bottom: 20px;
+        }
+        
+        /* 分类导航 */
+        .categories-nav {
+            padding: 15px;
+            background-color: white;
+            margin-bottom: 15px;
+            overflow-x: auto;
+            white-space: nowrap;
+            scrollbar-width: none; /* Firefox */
+            -ms-overflow-style: none; /* IE and Edge */
+        }
+        
+        .categories-nav::-webkit-scrollbar {
+            display: none; /* Chrome, Safari, Opera */
+        }
+        
+        .categories-nav .category-pill {
+            display: inline-block;
+            padding: 8px 16px;
+            margin-right: 10px;
+            background-color: #f5f6fa;
+            color: var(--dark-color);
+            border-radius: 50px;
+            font-size: 14px;
+            transition: all 0.2s ease;
+        }
+        
+        .categories-nav .category-pill.active {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        /* 卡片样式 */
+        .card {
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            margin-bottom: 15px;
+            overflow: hidden;
+        }
+        
+        /* 邀请码卡片 */
+        .invite-card {
+            display: flex;
+            padding: 15px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        
+        .invite-card:last-child {
+            border-bottom: none;
+        }
+        
+        .invite-logo {
+            width: 60px;
+            height: 60px;
+            border-radius: var(--border-radius);
+            background-color: #f5f6fa;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-right: 15px;
+            flex-shrink: 0;
+        }
+        
+        .invite-logo i {
+            font-size: 24px;
+            color: var(--primary-color);
+        }
+        
+        .invite-info {
+            flex: 1;
+        }
+        
+        .invite-title {
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: var(--dark-color);
+        }
+        
+        .invite-meta {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+        
+        .badge {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 50px;
+            font-size: 12px;
+            font-weight: 500;
+            margin-right: 10px;
+        }
+        
+        .badge-free {
+            background-color: #e3f2fd;
+            color: #2196f3;
+        }
+        
+        .badge-trade {
+            background-color: #fff8e1;
+            color: #ffc107;
+        }
+        
+        .badge-sale {
+            background-color: #e8f5e9;
+            color: #4caf50;
+        }
+        
+        .invite-time {
+            font-size: 12px;
+            color: #9ca3af;
+        }
+        
+        .invite-desc {
+            font-size: 14px;
+            color: #6b7280;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+        }
+        
+        /* 版块标题 */
+        .section-title {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding: 0 15px;
+        }
+        
+        .section-title h2 {
+            font-size: 1.2rem;
+            color: var(--dark-color);
+        }
+        
+        .section-title a {
+            font-size: 14px;
+            color: var(--primary-color);
+        }
+        
+        /* 快捷功能区域 */
+        .quick-actions {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            padding: 15px;
+            background-color: white;
+            border-radius: var(--border-radius);
+            margin-bottom: 20px;
+        }
+        
+        .quick-action {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+        
+        .quick-action .icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 8px;
+            color: white;
+            font-size: 20px;
+        }
+        
+        .quick-action:nth-child(1) .icon {
+            background-color: #4a86e8;
+        }
+        
+        .quick-action:nth-child(2) .icon {
+            background-color: #6c5ce7;
+        }
+        
+        .quick-action:nth-child(3) .icon {
+            background-color: #00cec9;
+        }
+        
+        .quick-action:nth-child(4) .icon {
+            background-color: #fdcb6e;
+        }
+        
+        .quick-action .label {
+            font-size: 13px;
+            color: var(--dark-color);
+        }
+        
+        /* Banner轮播 */
+        .banner {
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            position: relative;
+            margin-bottom: 20px;
+        }
+        
+        .banner img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+        }
+        
+        /* 底部导航 */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: white;
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 0;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
+            z-index: 100;
+        }
+        
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: #9ca3af;
+            font-size: 12px;
+        }
+        
+        .nav-item i {
+            font-size: 22px;
+            margin-bottom: 4px;
+        }
+        
+        .nav-item.active {
+            color: var(--primary-color);
+        }
+        
+        /* 用户评分 */
+        .user-rating {
+            display: flex;
+            align-items: center;
+            color: #ffc107;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+        
+        .user-rating span {
+            margin-left: 5px;
+            color: #9ca3af;
+        }
+        
+        /* 发布按钮 */
+        .fab-button {
+            position: fixed;
+            bottom: 80px;
+            right: 20px;
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background-color: var(--primary-color);
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            z-index: 99;
+        }
+        
+        /* 模态框相关样式 */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0,0,0,0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal-content {
+            background-color: white;
+            border-radius: var(--border-radius);
+            width: 90%;
+            max-width: 500px;
+            max-height: 90vh;
+            overflow-y: auto;
+            animation: modalFadeIn 0.3s;
+        }
+        
+        .modal-header {
+            padding: 15px;
+            border-bottom: 1px solid #f0f0f0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .modal-title {
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+        
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #9ca3af;
+        }
+        
+        .modal-body {
+            padding: 15px;
+        }
+        
+        @keyframes modalFadeIn {
+            from { opacity: 0; transform: translateY(50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* 表单样式 */
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        
+        .form-control:focus {
+            border-color: var(--primary-color);
+            outline: none;
+        }
+        
+        .form-select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            font-size: 16px;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%239ca3af' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 15px center;
+            background-size: 16px;
+        }
+        
+        .radio-group {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .radio-option {
+            display: flex;
+            align-items: center;
+        }
+        
+        .radio-option input {
+            margin-right: 8px;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            border: none;
+            border-radius: var(--border-radius);
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .btn-block {
+            display: block;
+            width: 100%;
+        }
+        
+        /* 提示信息 */
+        .toast {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: var(--dark-color);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 50px;
+            font-size: 14px;
+            z-index: 1100;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            display: none;
+        }
+        
+        /* 详情页样式 */
+        .detail-header {
+            display: flex;
+            align-items: center;
+            padding: 20px 15px;
+            background-color: white;
+            margin-bottom: 15px;
+            border-radius: var(--border-radius);
+        }
+        
+        .detail-logo {
+            width: 80px;
+            height: 80px;
+            border-radius: var(--border-radius);
+            background-color: #f5f6fa;
+            margin-right: 15px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-shrink: 0;
+        }
+        
+        .detail-logo i {
+            font-size: 36px;
+            color: var(--primary-color);
+        }
+        
+        .detail-info h1 {
+            font-size: 1.5rem;
+            margin-bottom: 5px;
+        }
+        
+        .detail-meta {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 8px;
+        }
+        
+        .detail-content {
+            background-color: white;
+            padding: 20px 15px;
+            border-radius: var(--border-radius);
+            margin-bottom: 15px;
+        }
+        
+        .detail-content h2 {
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        
+        .publisher-info {
+            display: flex;
+            align-items: center;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #f0f0f0;
+        }
+        
+        .avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: #f5f6fa;
+            overflow: hidden;
+            margin-right: 15px;
+        }
+        
+        .avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .publisher-name {
+            font-weight: 500;
+        }
+        
+        .detail-actions {
+            display: flex;
+            gap: 15px;
+            padding: 15px;
+            position: sticky;
+            bottom: 70px;
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+        }
+        
+        .detail-actions .btn {
+            flex: 1;
+        }
+        
+        /* 聊天框样式 */
+        .chat-container {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+        
+        .chat-header {
+            padding: 15px;
+            background-color: white;
+            box-shadow: var(--box-shadow);
+            display: flex;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .chat-header .back-btn {
+            margin-right: 15px;
+            font-size: 20px;
+            color: var(--dark-color);
+        }
+        
+        .chat-header .user-info {
+            flex: 1;
+        }
+        
+        .chat-header .user-info h2 {
+            font-size: 1.1rem;
+        }
+        
+        .chat-header .user-info p {
+            font-size: 0.8rem;
+            color: #9ca3af;
+        }
+        
+        .chat-messages {
+            flex: 1;
+            padding: 15px;
+            overflow-y: auto;
+            background-color: #f9fafb;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .message {
+            max-width: 80%;
+            padding: 10px 15px;
+            border-radius: 18px;
+            margin-bottom: 15px;
+            position: relative;
+        }
+        
+        .message.received {
+            background-color: white;
+            align-self: flex-start;
+            border-bottom-left-radius: 5px;
+        }
+        
+        .message.sent {
+            background-color: var(--primary-color);
+            color: white;
+            align-self: flex-end;
+            border-bottom-right-radius: 5px;
+        }
+        
+        .message-time {
+            font-size: 0.7rem;
+            position: absolute;
+            bottom: -20px;
+            color: #9ca3af;
+        }
+        
+        .received .message-time {
+            left: 0;
+        }
+        
+        .sent .message-time {
+            right: 0;
+        }
+        
+        .chat-input {
+            padding: 15px;
+            background-color: white;
+            border-top: 1px solid #f0f0f0;
+            display: flex;
+            align-items: center;
+            position: sticky;
+            bottom: 0;
+        }
+        
+        .chat-input input {
+            flex: 1;
+            border: none;
+            background-color: #f5f6fa;
+            border-radius: 50px;
+            padding: 12px 15px;
+            font-size: 16px;
+            margin-right: 10px;
+        }
+        
+        .chat-input input:focus {
+            outline: none;
+        }
+        
+        .chat-input button {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+    <!-- 主页 -->
+    <div id="home-screen" class="screen">
+        <!-- 头部 -->
+        <div class="header">
+            <div class="header-title">
+                <i class="fas fa-key"></i>
+                InviteHub
+            </div>
+            <div class="header-actions">
+                <a href="#" id="show-notifications"><i class="fas fa-bell"></i></a>
+                <a href="#" id="show-messages"><i class="fas fa-envelope"></i></a>
+            </div>
+        </div>
+        
+        <!-- 搜索栏 -->
+        <div class="search-bar">
+            <div class="search-input">
+                <i class="fas fa-search"></i>
+                <input type="text" placeholder="搜索应用或服务名称...">
+            </div>
+        </div>
+        
+        <!-- 主内容区域 -->
+        <div class="main-content">
+            <!-- 快捷功能区域 -->
+            <div class="container">
+                <div class="quick-actions">
+                    <div class="quick-action">
+                        <div class="icon">
+                            <i class="fas fa-key"></i>
+                        </div>
+                        <div class="label">发布邀请码</div>
+                    </div>
+                    <div class="quick-action">
+                        <div class="icon">
+                            <i class="fas fa-exchange-alt"></i>
+                        </div>
+                        <div class="label">我要交换</div>
+                    </div>
+                    <div class="quick-action">
+                        <div class="icon">
+                            <i class="fas fa-search"></i>
+                        </div>
+                        <div class="label">求码</div>
+                    </div>
+                    <div class="quick-action">
+                        <div class="icon">
+                            <i class="fas fa-heart"></i>
+                        </div>
+                        <div class="label">我的收藏</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Banner轮播 -->
+            <div class="container">
+                <div class="banner">
+                    <img src="https://via.placeholder.com/600x200?text=热门服务邀请码" alt="Banner">
+                </div>
+            </div>
+            
+            <!-- 分类导航 -->
+            <div class="categories-nav">
+                <a href="#" class="category-pill active">全部</a>
+                <a href="#" class="category-pill">AI工具</a>
+                <a href="#" class="category-pill">流媒体</a>
+                <a href="#" class="category-pill">开发工具</a>
+                <a href="#" class="category-pill">游戏</a>
+                <a href="#" class="category-pill">教育</a>
+                <a href="#" class="category-pill">电商服务</a>
+                <a href="#" class="category-pill">云服务</a>
+                <a href="#" class="category-pill">移动应用</a>
+            </div>
+            
+            <!-- 最新邀请码 -->
+            <div class="container">
+                <div class="section-title">
+                    <h2>最新邀请码</h2>
+                    <a href="#">查看全部</a>
+                </div>
+                
+                <div class="card">
+                    <div class="invite-card" onclick="showDetail()">
+                        <div class="invite-logo">
+                            <i class="fas fa-robot"></i>
+                        </div>
+                        <div class="invite-info">
+                            <div class="invite-title">ChatGPT Plus 会员邀请</div>
+                            <div class="invite-meta">
+                                <span class="badge badge-free">免费分享</span>
+                                <span class="invite-time">2小时前</span>
+                            </div>
+                            <div class="invite-desc">分享 ChatGPT Plus 会员邀请码，使用后可获得优先访问权限和新功能体验。</div>
+                            <div class="user-rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                                <span>4.5 (32评价)</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="invite-card" onclick="showDetail()">
+                        <div class="invite-logo">
+                            <i class="fas fa-music"></i>
+                        </div>
+                        <div class="invite-info">
+                            <div class="invite-title">Spotify 家庭计划邀请</div>
+                            <div class="invite-meta">
+                                <span class="badge badge-trade">换取</span>
+                                <span class="invite-time">5小时前</span>
+                            </div>
+                            <div class="invite-desc">提供 Spotify 家庭计划邀请位，希望换取 Netflix 或 Disney+ 会员邀请。</div>
+                            <div class="user-rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="far fa-star"></i>
+                                <span>4.0 (15评价)</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="invite-card" onclick="showDetail()">
+                        <div class="invite-logo">
+                            <i class="fas fa-code"></i>
+                        </div>
+                        <div class="invite-info">
+                            <div class="invite-title">GitHub Copilot 内测邀请</div>
+                            <div class="invite-meta">
+                                <span class="badge badge-sale">出售 ¥30</span>
+                                <span class="invite-time">昨天</span>
+                            </div>
+                            <div class="invite-desc">出售 GitHub Copilot 内测邀请码，AI编程助手，提高编码效率。</div>
+                            <div class="user-rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <span>5.0 (8评价)</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 热门邀请码 -->
+            <div class="container">
+                <div class="section-title">
+                    <h2>热门邀请码</h2>
+                    <a href="#">查看全部</a>
+                </div>
+                
+                <div class="card">
+                    <div class="invite-card" onclick="showDetail()">
+                        <div class="invite-logo">
+                            <i class="fas fa-video"></i>
+                        </div>
+                        <div class="invite-info">
+                            <div class="invite-title">YouTube Premium 家庭组</div>
+                            <div class="invite-meta">
+                                <span class="badge badge-free">免费分享</span>
+                                <span class="invite-time">2天前</span>
+                            </div>
+                            <div class="invite-desc">分享 YouTube Premium 家庭组邀请，无广告观看视频，支持后台播放。</div>
+                            <div class="user-rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="far fa-star"></i>
+                                <span>4.0 (53评价)</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="invite-card" onclick="showDetail()">
+                        <div class="invite-logo">
+                            <i class="fas fa-palette"></i>
+                        </div>
+                        <div class="invite-info">
+                            <div class="invite-title">Midjourney 内测邀请</div>
+                            <div class="invite-meta">
+                                <span class="badge badge-sale">出售 ¥50</span>
+                                <span class="invite-time">3天前</span>
+                            </div>
+                            <div class="invite-desc">出售 Midjourney AI 绘画工具内测邀请，快速生成高质量图像。</div>
+                            <div class="user-rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                                <span>4.7 (42评价)</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="invite-card" onclick="showDetail()">
+                        <div class="invite-logo">
+                            <i class="fas fa-gamepad"></i>
+                        </div>
+                        <div class="invite-info">
+                            <div class="invite-title">Xbox Game Pass 1元体验</div>
+                            <div class="invite-meta">
+                                <span class="badge badge-trade">换取</span>
+                                <span class="invite-time">4天前</span>
+                            </div>
+                            <div class="invite-desc">提供 Xbox Game Pass 1元体验兑换码，希望交换任何其他游戏服务邀请。</div>
+                            <div class="user-rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                                <i class="far fa-star"></i>
+                                <span>3.5 (19评价)</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 浮动发布按钮 -->
+        <a href="#" class="fab-button" id="show-post-modal">
+            <i class="fas fa-plus"></i>
+        </a>
+        
+        <!-- 底部导航 -->
+        <div class="bottom-nav">
+            <a href="#" class="nav-item active">
+                <i class="fas fa-home"></i>
+                <span>首页</span>
+            </a>
+            <a href="#" class="nav-item" onclick="showBrowse()">
+                <i class="fas fa-compass"></i>
+                <span>浏览</span>
+            </a>
+            <a href="#" class="nav-item" onclick="showInbox()">
+                <i class="fas fa-comment-alt"></i>
+                <span>消息</span>
+            </a>
+            <a href="#" class="nav-item" onclick="showProfile()">
+                <i class="fas fa-user"></i>
+                <span>我的</span>
+            </a>
+        </div>
+    </div>
+    
+    <!-- 邀请码详情页 -->
+    <div id="detail-screen" class="screen" style="display: none;">
+        <!-- 头部 -->
+        <div class="header">
+            <div class="header-title">
+                <a href="#" onclick="goBack()"><i class="fas fa-arrow-left"></i></a>
+                <span style="margin-left: 15px;">邀请码详情</span>
+            </div>
+            <div class="header-actions">
+                <a href="#" id="share-button"><i class="fas fa-share-alt"></i></a>
+                <a href="#" id="save-button"><i class="far fa-star"></i></a>
+            </div>
+        </div>
+        
+        <!-- 详情内容 -->
+        <div class="container">
+            <div class="detail-header">
+                <div class="detail-logo">
+                    <i class="fas fa-robot"></i>
+                </div>
+                <div class="detail-info">
+                    <h1>ChatGPT Plus 会员邀请</h1>
+                    <div class="detail-meta">
+                        <span class="badge badge-free">免费分享</span>
+                        <span style="color: #9ca3af; font-size: 14px;">2小时前</span>
+                    </div>
+                    <div class="user-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star-half-alt"></i>
+                        <span>4.5 (32评价)</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="detail-content">
+                <h2>邀请码详情</h2>
+                <p>分享 ChatGPT Plus 会员邀请码，使用此邀请码注册后可获得以下权益：</p>
+                <ul style="margin: 15px 0 15px 20px;">
+                    <li>优先访问新功能和改进</li>
+                    <li>即使在高峰时段也能使用 ChatGPT</li>
+                    <li>更快的响应速度</li>
+                    <li>优先使用最新模型 GPT-4</li>
+                </ul>
+                <p>有效期：长期有效</p>
+                <p>使用方法：在ChatGPT官网注册时输入邀请码即可激活高级功能。</p>
+                <p>注意事项：一个邀请码只能使用一次，请在获取后尽快使用。</p>
+                
+                <div class="publisher-info">
+                    <div class="avatar">
+                        <img src="https://via.placeholder.com/50" alt="Publisher Avatar">
+                    </div>
+                    <div>
+                        <div class="publisher-name">张先生</div>
+                        <div style="font-size: 14px; color: #9ca3af;">已认证用户 | 信誉评分: 4.8</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="detail-actions">
+                <button class="btn btn-primary" onclick="showChat()">联系发布者</button>
+                <button class="btn btn-outline" style="background-color: white; border: 1px solid #ddd; color: var(--dark-color);">举报</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 聊天界面 -->
+    <div id="chat-screen" class="screen" style="display: none;">
+        <div class="chat-container">
+            <div class="chat-header">
+                <a href="#" class="back-btn" onclick="goBack()">
+                    <i class="fas fa-arrow-left"></i>
+                </a>
+                <div class="user-info">
+                    <h2>张先生</h2>
+                    <p>ChatGPT Plus 会员邀请</p>
+                </div>
+            </div>
+            
+            <div class="chat-messages">
+                <div class="message received">
+                    您好，我看到您对ChatGPT Plus会员邀请码感兴趣。请问有什么疑问可以帮到您？
+                    <div class="message-time">14:30</div>
+                </div>
+                
+                <div class="message sent">
+                    你好，我想了解一下这个邀请码的详细情况。是否真的可以免费获取？有使用期限吗？
+                    <div class="message-time">14:32</div>
+                </div>
+                
+                <div class="message received">
+                    是的，我确实是免费分享这个邀请码的。邀请码本身没有使用期限，但建议尽快使用，因为数量有限。使用后，您将获得ChatGPT Plus的所有会员权益，包括GPT-4的访问权限和更快的响应速度。
+                    <div class="message-time">14:35</div>
+                </div>
+            </div>
+            
+            <div class="chat-input">
+                <input type="text" placeholder="输入消息...">
+                <button>
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 发布邀请码模态框 -->
+    <div id="post-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">发布邀请码</h3>
+                <button class="modal-close" id="close-post-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="post-form">
+                    <div class="form-group">
+                        <label class="form-label">发布类型</label>
+                        <div class="radio-group">
+                            <label class="radio-option">
+                                <input type="radio" name="type" value="free" checked> 免费分享
+                            </label>
+                            <label class="radio-option">
+                                <input type="radio" name="type" value="trade"> 我想交换
+                            </label>
+                            <label class="radio-option">
+                                <input type="radio" name="type" value="sale"> 我想出售
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">服务/应用名称</label>
+                        <input type="text" class="form-control" placeholder="例如：ChatGPT, Spotify, Netflix...">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">分类</label>
+                        <select class="form-select">
+                            <option value="">请选择分类</option>
+                            <option value="ai">AI工具</option>
+                            <option value="media">流媒体</option>
+                            <option value="dev">开发工具</option>
+                            <option value="games">游戏</option>
+                            <option value="education">教育</option>
+                            <option value="ecommerce">电商服务</option>
+                            <option value="cloud">云服务</option>
+                            <option value="mobile">移动应用</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">邀请码权益/描述</label>
+                        <textarea class="form-control" rows="4" placeholder="详细说明邀请码提供的权益和使用条件..."></textarea>
+                    </div>
+                    
+                    <div class="form-group" id="sale-price" style="display: none;">
+                        <label class="form-label">价格 (¥)</label>
+                        <input type="number" class="form-control" placeholder="请输入价格">
+                    </div>
+                    
+                    <div class="form-group" id="trade-wish" style="display: none;">
+                        <label class="form-label">我希望换取</label>
+                        <input type="text" class="form-control" placeholder="例如：Netflix会员邀请码">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">邀请码发送方式</label>
+                        <select class="form-select">
+                            <option value="message">通过私信发送</option>
+                            <option value="auto">满足条件自动发送</option>
+                        </select>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary btn-block">发布邀请码</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 消息通知 -->
+    <div id="toast" class="toast">操作成功！</div>
+    
+    <script>
+        // 显示发布模态框
+        document.getElementById('show-post-modal').addEventListener('click', function(e) {
+            e.preventDefault();
+            document.getElementById('post-modal').style.display = 'flex';
+        });
+        
+        // 关闭发布模态框
+        document.getElementById('close-post-modal').addEventListener('click', function() {
+            document.getElementById('post-modal').style.display = 'none';
+        });
+        
+        // 根据发布类型显示/隐藏额外字段
+        const typeRadios = document.querySelectorAll('input[name="type"]');
+        typeRadios.forEach(radio => {
+            radio.addEventListener('change', function() {
+                document.getElementById('sale-price').style.display = 'none';
+                document.getElementById('trade-wish').style.display = 'none';
+                
+                if (this.value === 'sale') {
+                    document.getElementById('sale-price').style.display = 'block';
+                } else if (this.value === 'trade') {
+                    document.getElementById('trade-wish').style.display = 'block';
+                }
+            });
+        });
+        
+        // 点击模态框外部关闭模态框
+        window.addEventListener('click', function(e) {
+            if (e.target.classList.contains('modal')) {
+                e.target.style.display = 'none';
+            }
+        });
+        
+        // 提交表单
+        document.getElementById('post-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            document.getElementById('post-modal').style.display = 'none';
+            
+            // 显示提示信息
+            const toast = document.getElementById('toast');
+            toast.textContent = '邀请码发布成功！';
+            toast.style.display = 'block';
+            
+            setTimeout(function() {
+                toast.style.display = 'none';
+            }, 3000);
+        });
+        
+        // 页面切换函数
+        function showDetail() {
+            document.getElementById('home-screen').style.display = 'none';
+            document.getElementById('detail-screen').style.display = 'block';
+            document.getElementById('chat-screen').style.display = 'none';
+        }
+        
+        function showChat() {
+            document.getElementById('home-screen').style.display = 'none';
+            document.getElementById('detail-screen').style.display = 'none';
+            document.getElementById('chat-screen').style.display = 'block';
+        }
+        
+        function goBack() {
+            if (document.getElementById('chat-screen').style.display === 'block') {
+                document.getElementById('chat-screen').style.display = 'none';
+                document.getElementById('detail-screen').style.display = 'block';
+            } else {
+                document.getElementById('detail-screen').style.display = 'none';
+                document.getElementById('home-screen').style.display = 'block';
+            }
+        }
+        
+        // 其他功能函数
+        function showBrowse() {
+            // 切换到浏览页面
+            const toast = document.getElementById('toast');
+            toast.textContent = '浏览功能即将上线';
+            toast.style.display = 'block';
+            
+            setTimeout(function() {
+                toast.style.display = 'none';
+            }, 2000);
+        }
+        
+        function showInbox() {
+            // 切换到消息页面
+            const toast = document.getElementById('toast');
+            toast.textContent = '消息功能即将上线';
+            toast.style.display = 'block';
+            
+            setTimeout(function() {
+                toast.style.display = 'none';
+            }, 2000);
+        }
+        
+        function showProfile() {
+            // 切换到个人资料页面
+            const toast = document.getElementById('toast');
+            toast.textContent = '个人资料功能即将上线';
+            toast.style.display = 'block';
+            
+            setTimeout(function() {
+                toast.style.display = 'none';
+            }, 2000);
+        }
+        
+        // 监听来自父窗口的消息
+        window.addEventListener('message', function(event) {
+            if (event.data.action === 'showScreen') {
+                const screenId = event.data.screenId;
+                
+                // 隐藏所有屏幕
+                document.getElementById('home-screen').style.display = 'none';
+                document.getElementById('detail-screen').style.display = 'none';
+                document.getElementById('chat-screen').style.display = 'none';
+                document.getElementById('post-modal').style.display = 'none';
+                
+                // 显示请求的屏幕
+                if (screenId === 'home-screen') {
+                    document.getElementById('home-screen').style.display = 'block';
+                } else if (screenId === 'detail-screen') {
+                    document.getElementById('detail-screen').style.display = 'block';
+                } else if (screenId === 'chat-screen') {
+                    document.getElementById('chat-screen').style.display = 'block';
+                } else if (screenId === 'post-modal') {
+                    document.getElementById('post-modal').style.display = 'flex';
+                }
+            }
+        });
+        
+        // 初始化页面
+        document.addEventListener('DOMContentLoaded', function() {
+            // 默认显示首页
+            document.getElementById('home-screen').style.display = 'block';
+            document.getElementById('detail-screen').style.display = 'none';
+            document.getElementById('chat-screen').style.display = 'none';
+        });
+    </script>
+</body>
+</html>
